@@ -2,9 +2,41 @@ import os
 import sys
 import json
 import argparse
+import hashlib
 
-
+MASTER_FILE = "master.json"
 PASSWORDS = "Passwords.json"
+
+def hash_main_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def check_main_pass():
+    if not os.path.exists(MASTER_FILE):
+        print("No Master's Password has been found. Create one right now!")
+
+        while True:
+            new_pass = input("Enter your Master Password: ").strip()
+            confirm_pass = input("Write it a second time: ").strip()
+
+            if new_pass == confirm_pass:
+                with open(MASTER_FILE, "w") as f:
+                    json.dump({"Password": hash_main_password(new_pass)}, f)
+                print("The Password has been created Successfully.")
+                break
+            else:
+                print("Passwords don't match, try again.")
+    else:
+        with open(MASTER_FILE, "r") as f:
+            data = json.load(f)
+        for i in range(3):
+            entered = input("Enter your Master's Password: ").strip()
+            if hash_main_password(entered) == data["Password"]:
+                print("Access Granted!")
+                return True
+            else:
+                print("Incorrect Password")
+        print("Too many attempts, Exiting....")
+        sys.exit()
 
 def load_passwords():
     if not os.path.exists(PASSWORDS):
@@ -18,7 +50,7 @@ def save_passwords(passes):
     
 def add_passwords(place, username, password):
     My_Passes = load_passwords()
-    My_Passes.append({"Place" : place, "Username" : username, "Password": password})
+    My_Passes.append({"Place" : place, "Username" : username, "Password" : password})
     save_passwords(My_Passes)
     print(f"\nAdded; You have an Account in {place} as {username} with {password} as your password")
 
@@ -103,6 +135,7 @@ def CLI():
 
 if __name__ == "__main__":
     
+    check_main_pass()
     if len(sys.argv) > 1:
         CLI()
     else:
