@@ -50,8 +50,8 @@ PasswordManager/
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/<your-repo-name>.git
-cd <your-repo-name>
+git clone https://github.com/Saadatnejad2004/Password-Manager.git
+cd Password-Manager
 ```
 2️⃣ Run the Program
 Simply run:
@@ -115,41 +115,6 @@ Enter your Username: amir-hs
 Enter your Password: mySecurePass
 Added; You have an Account in GitHub as amir-hs with mySecurePass as your password.
 
-Choose an action: list
-
-1 - GitHub | User: amir-hs & Pass: mySecurePass
-🧰 Built With
-Python 3
-
-json — For saving and loading passwords
-
-argparse — For command-line interface
-
-hashlib — For password hashing (security)
-
-os / sys — For file and system management
-
-🧠 How It Works (Behind the Scenes)
-When you add a new password:
-
-The program loads Passwords.json.
-
-Appends the new entry.
-
-Saves it back to the same file.
-
-When you remove one:
-
-It deletes the chosen entry by index and saves again.
-
-The master password check occurs before anything else to secure your data.
-
-Stored password is hashed with SHA-256:
-
-hashlib.sha256(password.encode()).hexdigest()
-The hash is compared at every login attempt.
-
-The program exits after 3 failed login attempts for safety.
 
 🧩 Future Improvements
 🔐 Encrypt stored passwords (not just hash the master password)
